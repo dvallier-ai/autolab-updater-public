@@ -26,7 +26,7 @@ set -euo pipefail
 GIT="/usr/bin/git"  # bypass ~/.local/bin/git guard
 UPSTREAM_BARE="$HOME/.autolab/updates/upstream.git"
 UPSTREAM_REPO="https://github.com/openclaw/openclaw.git"
-FORK_REPO="https://github.com/dvallier-ai/autolab-public.git"
+FORK_REPO="git@github.com:dvallier-ai/autolab-public.git"
 TEST_DIR="$HOME/autolab-test"
 PROD_DIR="$HOME/autolab"
 STATE_FILE="$HOME/.autolab/updates/state.json"
@@ -84,6 +84,19 @@ apply_rebrand_file() {
 
     # Extra guard: skip truly binary files
     if ! file "$file" 2>/dev/null | grep -qE 'text|JSON|XML|empty'; then
+        return 0
+    fi
+
+    # Special handling for package.json to preserve workspace:* dependencies
+    if [[ "$(basename "$file")" == "package.json" ]]; then
+        # Only rebrand GitHub org references, skip generic "openclaw" string replacements
+        # This prevents breaking pnpm workspace self-references like "openclaw": "workspace:*"
+        sed -i '' \
+            -e 's|openclaw/openclaw|dvallier-ai/autolab-public|g' \
+            -e 's|@openclaw/openclaw|@dvallier-ai/autolab-public|g' \
+            -e 's|"openclaw": ">=2026\.[0-9.]*"|"autolab": "workspace:*"|g' \
+            -e 's|"openclaw": "\^2026\.[0-9.]*"|"autolab": "workspace:*"|g' \
+            "$file" 2>/dev/null || true
         return 0
     fi
 
@@ -197,6 +210,12 @@ apply_full_rebrand() {
     # 3. Rename files and directories with openclaw in names
     apply_rebrand_paths "$dir"
     ok "Path renames complete"
+
+    # 4. Delete pnpm-lock.yaml (will be regenerated on install)
+    if [[ -f "$dir/pnpm-lock.yaml" ]]; then
+        rm "$dir/pnpm-lock.yaml"
+        log "Removed pnpm-lock.yaml (will regenerate on install)"
+    fi
 }
 
 # ── Rebrand Verification ──────────────────────────────────────────────────────
@@ -210,7 +229,7 @@ verify_rebrand() {
         --include="*.css" --include="*.html" \
         --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist \
         "$dir/" 2>/dev/null \
-        | grep -vi "dvallier-ai/autolab-public" \
+        | grep -vi "danv-intel/autolab" \
         | grep -vi "# was openclaw" \
         | grep -vi "was: openclaw" \
         | grep -vi "originally openclaw" \
@@ -326,7 +345,9 @@ phase_test_env() {
     if [[ -f "$PROD_DIR/src/canvas-host/a2ui/a2ui.bundle.js" ]]; then
         mkdir -p "$TEST_DIR/src/canvas-host/a2ui"
         cp "$PROD_DIR/src/canvas-host/a2ui/a2ui.bundle.js" "$TEST_DIR/src/canvas-host/a2ui/"
-        ok "Copied a2ui.bundle.js from production"
+        log "Copied a2ui.bundle.js from production"
+    else
+        log "⚠️  a2ui.bundle.js not found in production - will be generated during build"
     fi
 
     # Restore preserved items
