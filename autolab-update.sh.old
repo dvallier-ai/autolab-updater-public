@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# AutoLab Update CLI - Simple wrapper for the smart update system
+# Can be called by cron or manually
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+case "${1:-help}" in
+    check)
+        exec bash "$SCRIPT_DIR/orchestrate.sh" check
+        ;;
+    scan)
+        # Full scan: monitor + analyze + generate patches + report
+        exec bash "$SCRIPT_DIR/orchestrate.sh" run
+        ;;
+    apply)
+        # Apply pending updates
+        exec bash "$SCRIPT_DIR/orchestrate.sh" apply-pending
+        ;;
+    analyze)
+        exec bash "$SCRIPT_DIR/orchestrate.sh" analyze
+        ;;
+    report)
+        exec bash "$SCRIPT_DIR/orchestrate.sh" report
+        ;;
+    status)
+        exec bash "$SCRIPT_DIR/orchestrate.sh" status
+        ;;
+    help|*)
+        cat << 'EOF'
+AutoLab Smart Update System
+============================
+
+Safely monitors, analyzes, and applies upstream openclaw updates
+with automatic openclaw→autolab rebrand transformation.
+
+Usage: autolab-update <command>
+
+Commands:
+  check     - Quick check for new upstream releases
+  scan      - Full pipeline: check → analyze → generate patches → report
+  apply     - Apply pending patches that test clean
+  analyze   - Run changelog analysis on pending releases
+  report    - Show latest update report
+  status    - Show current state (base version, pending, applied)
+
+The system uses a separate bare clone of openclaw/openclaw to fetch
+upstream changes without touching the main autolab repo's remotes.
+All patches are automatically transformed (openclaw→autolab rebrand)
+before application.
+
+Pipeline flow:
+  1. Monitor:  GitHub API → detect new releases
+  2. Analyze:  Parse changelogs → categorize (SECURITY/BUGFIX/FEATURE)
+  3. Patch:    Generate diffs → apply rebrand transforms → test apply
+  4. Report:   Summarize findings → output to Telegram/console
+  5. Apply:    (manual/explicit) Apply clean patches on update branches
+
+Files:
+  ~/.autolab/updates/state.json      - Current state
+  ~/.autolab/updates/manifest.json   - Track applied/skipped updates
+  ~/.autolab/updates/changelogs/     - Cached release changelogs
+  ~/.autolab/updates/patches/        - Generated patch files
+  ~/.autolab/updates/reports/        - Analysis reports
+  ~/autolab/scripts/smart-update/    - These scripts
+EOF
+        ;;
+esac
