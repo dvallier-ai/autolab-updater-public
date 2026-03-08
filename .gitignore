@@ -1,0 +1,22 @@
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Test directories
+autolab-test/
+upstream.git/
+
+# State files
+state.json
+
+# macOS
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+*.swp

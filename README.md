@@ -1,6 +1,13 @@
 # AutoLab Smart Update Pipeline
 
-> Automated upstream sync + rebrand for the AutoLab fork of OpenClaw.
+<p align="center">
+  <a href="https://github.com/dvallier-ai/autolab-updater-public/releases"><img src="https://img.shields.io/github/v/release/dvallier-ai/autolab-updater-public?style=for-the-badge" alt="GitHub release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
+</p>
+
+**Automated upstream sync + rebrand for AutoLab forks**
+
+Keep your [AutoLab](https://github.com/dvallier-ai/autolab-public) fork in sync with upstream OpenClaw releases while maintaining a complete rebrand.
 
 ## Overview
 
