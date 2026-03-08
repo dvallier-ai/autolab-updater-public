@@ -70,7 +70,7 @@ maintaining a complete rebrand (zero `openclaw` references in source).
 │     └─ verify zero leaks                                   │
 │                                                             │
 │  4. OVERLAY       ~/autolab-test/                           │
-│     ├─ clone from your-username/autolab fork                   │
+│     ├─ clone from dvallier-ai/autolab-public fork                   │
 │     ├─ rsync rebranded upstream over it                     │
 │     ├─ preserve: scripts/smart-update, a2ui.bundle.js      │
 │     └─ commit on branch update/vX.X.X                      │
@@ -86,7 +86,7 @@ maintaining a complete rebrand (zero `openclaw` references in source).
 │     ├─ health check (60s timeout)                           │
 │     └─ auto-rollback if unhealthy                          │
 │                                                             │
-│  7. DISTRIBUTE    git push → your-username/autolab             │
+│  7. DISTRIBUTE    git push → dvallier-ai/autolab-public             │
 │     └─ other machines: git pull && pnpm build              │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -104,7 +104,7 @@ maintaining a complete rebrand (zero `openclaw` references in source).
 - LaunchAgent label: `ai.openclaw.gateway` (not rebranded)
 - Gateway port: 18789
 - First deployment will need to:
-  1. Clone `your-username/autolab` to `~/autolab/`
+  1. Clone `dvallier-ai/autolab-public` to `~/autolab/`
   2. Replace the LaunchAgent plist (rename to `ai.autolab.gateway`)
   3. Update env vars from `OPENCLAW_*` to `AUTOLAB_*`
 
@@ -139,8 +139,8 @@ Applied to all text files in the upstream source:
 
 | Pattern | Replacement | Notes |
 |---------|-------------|-------|
-| `openclaw/openclaw` | `your-username/autolab` | GitHub org/repo |
-| `@openclaw/openclaw` | `@your-username/autolab` | npm package |
+| `openclaw/openclaw` | `dvallier-ai/autolab-public` | GitHub org/repo |
+| `@openclaw/openclaw` | `@dvallier-ai/autolab-public` | npm package |
 | `OpenClaw` | `AutoLab` | Title case |
 | `OPENCLAW` | `AUTOLAB` | Upper case |
 | `openclaw.com` | `autolab.app` | Domain |
