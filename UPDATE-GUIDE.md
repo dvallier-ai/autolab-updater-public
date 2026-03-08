@@ -79,7 +79,7 @@ PATH=/opt/homebrew/bin:$PATH ./autolab-deploy.sh --rollback
 5. **Restart** — systemd (`systemctl --user restart`) or launchctl (`bootout` + `bootstrap`)
 6. **Health check** — Poll `/health` for 60s
 7. **Auto-rollback** — If unhealthy, revert to backup git ref and rebuild
-8. **Push** — Push to `your-username/autolab` on GitHub
+8. **Push** — Push to `dvallier-ai/autolab-public` on GitHub
 
 ## Key Differences: Linux vs macOS
 
@@ -153,8 +153,8 @@ All text files get these transforms (order matters — specific first, catch-all
 
 | Pattern | Replacement |
 |---------|-------------|
-| `openclaw/openclaw` | `your-username/autolab` |
-| `@openclaw/openclaw` | `@your-username/autolab` |
+| `openclaw/openclaw` | `dvallier-ai/autolab-public` |
+| `@openclaw/openclaw` | `@dvallier-ai/autolab-public` |
 | `OpenClaw` | `AutoLab` |
 | `OPENCLAW` | `AUTOLAB` |
 | `openclaw.com` | `autolab.app` |
@@ -170,7 +170,7 @@ If a machine doesn't have the git repo yet:
 
 ```bash
 # 1. Clone
-git clone https://github.com/your-username/autolab.git ~/autolab
+git clone https://github.com/dvallier-ai/autolab-public.git ~/autolab
 
 # 2. Copy a2ui.bundle.js from an existing machine
 scp <existing>:~/autolab/src/canvas-host/a2ui/a2ui.bundle.js ~/autolab/src/canvas-host/a2ui/

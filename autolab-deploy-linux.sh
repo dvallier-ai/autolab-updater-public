@@ -247,7 +247,7 @@ push_to_fork() {
 
     (cd "$PROD_DIR" && $GIT push --force-with-lease origin main) 2>&1 | tail -3
 
-    ok "Pushed to your-username/autolab"
+    ok "Pushed to dvallier-ai/autolab-public"
 }
 
 # ── Update State ──────────────────────────────────────────────────────────────

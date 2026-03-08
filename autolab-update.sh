@@ -26,7 +26,7 @@ set -euo pipefail
 GIT="/usr/bin/git"  # bypass ~/.local/bin/git guard
 UPSTREAM_BARE="$HOME/.autolab/updates/upstream.git"
 UPSTREAM_REPO="https://github.com/openclaw/openclaw.git"
-FORK_REPO="https://github.com/your-username/autolab.git"
+FORK_REPO="https://github.com/dvallier-ai/autolab-public.git"
 TEST_DIR="$HOME/autolab-test"
 PROD_DIR="$HOME/autolab"
 STATE_FILE="$HOME/.autolab/updates/state.json"
@@ -89,8 +89,8 @@ apply_rebrand_file() {
 
     # Apply sed transforms (order matters - specific patterns first)
     sed -i '' \
-        -e 's|openclaw/openclaw|your-username/autolab|g' \
-        -e 's|@openclaw/openclaw|@your-username/autolab|g' \
+        -e 's|openclaw/openclaw|dvallier-ai/autolab-public|g' \
+        -e 's|@openclaw/openclaw|@dvallier-ai/autolab-public|g' \
         -e 's|OpenClaw|AutoLab|g' \
         -e 's|OPENCLAW|AUTOLAB|g' \
         -e 's|openclaw\.com|autolab.app|g' \
@@ -210,7 +210,7 @@ verify_rebrand() {
         --include="*.css" --include="*.html" \
         --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist \
         "$dir/" 2>/dev/null \
-        | grep -vi "your-username/autolab" \
+        | grep -vi "dvallier-ai/autolab-public" \
         | grep -vi "# was openclaw" \
         | grep -vi "was: openclaw" \
         | grep -vi "originally openclaw" \

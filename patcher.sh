@@ -19,7 +19,7 @@ apply_rebrand_transform() {
     local input="$1"
     # Core name transforms (order matters - do specific patterns first)
     sed \
-        -e 's|openclaw/openclaw|your-username/autolab|g' \
+        -e 's|openclaw/openclaw|dvallier-ai/autolab-public|g' \
         -e 's|OpenClaw|AutoLab|g' \
         -e 's|OPENCLAW|AUTOLAB|g' \
         -e 's|openclaw\.com|autolab\.app|g' \

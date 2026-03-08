@@ -263,7 +263,7 @@ push_to_fork() {
 
     (cd "$PROD_DIR" && $GIT push origin main) 2>&1 | tail -3
 
-    ok "Pushed to your-username/autolab — other machines can now pull"
+    ok "Pushed to dvallier-ai/autolab-public — other machines can now pull"
     echo ""
     log "Network deployment:"
     echo "  MacA (Nova):   ssh maca 'cd ~/autolab && git pull origin main && pnpm install && pnpm build'"

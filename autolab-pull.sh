@@ -25,7 +25,7 @@
 set -euo pipefail
 
 GIT="/usr/bin/git"
-FORK_REPO="https://github.com/your-username/autolab.git"
+FORK_REPO="https://github.com/dvallier-ai/autolab-public.git"
 INSTALL_DIR="$HOME/autolab"
 BACKUP_DIR="$HOME/.autolab/backups"
 LOG_DIR="$HOME/.autolab/logs"
